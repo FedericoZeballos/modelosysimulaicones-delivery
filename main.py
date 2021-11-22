@@ -3,4 +3,4 @@ import generateOrders
 
 
 # Ejemplo de utilizar una función exportada por el módulo
-print(generateOrders(3))
+print(generateOrders(2000, 2400))
