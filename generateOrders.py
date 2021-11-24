@@ -15,9 +15,9 @@ ordersList = []
 #sortedList = []
 preparationList = []
 readyToDeliverList = []
-maxOrders = 15
-openTime = 2000  # Intenta representar la hora 20:00, pero luego se puede representar mejor
-closeTime = 2400  # Intenta representar la hora 24:00, pero luego se puede representar mejor
+maxOrders = 15  # Cantidad de pedidos durante el día
+openTime = 0
+closeTime = 180
 
 # Genera una lista de diccionarios que contiene las ordenes
 
@@ -31,7 +31,6 @@ def generateOrders(openTime, closeTime):
         if (x < 0):
 
             idDelivery = 0
-
         else:
             idDelivery = 1
         order = {'idOrder': idOrder, 'time': time[o],
@@ -48,25 +47,33 @@ sortedList = sorted(ordersList, key=lambda i: i['time'])
 def OrdersStateMachine(openTime, closeTime):
     # Recursiona sobre el horario de funcion del delivery
     for t in range(openTime, closeTime):
-        # print(t)
+        ##
+        print(t)
+        ##
         # Recursiona sobre la lista de ordenes ordenadas
         for o in range(len(sortedList)):
             preparationTime = random.randint(10, 30)
             # Si el horario coincide con la hora de la orden
             if sortedList[o]['time'] == t:
+                ##
+                print(sortedList[o])
+                ##
                 # Crea un nuevo item en la horden que presenta el tiempo que estará listo el pedido
                 sortedList[o]['preparedTime'] = sortedList[o]['time'] + \
                     preparationTime
+                # Traspaso de lista de ordenes generadas o lista de ordenes para preparar
                 preparationList.append(sortedList[o])
-                # print(sortedList[o])
                 del sortedList[o]
                 break
         # Recursiona sobre la lista de pedidos en preparación
         for p in range(len(preparationList)):
             # Si el horario coincide con la hora de preparado de la orden
             if preparationList[p]['preparedTime'] == t:
+                ##
+                print(preparationList[p])
+                ##
+                # Traspaso de lista de ordenes en preparacion a lista de ordenes listas para enviar
                 readyToDeliverList.append(preparationList[p])
-                # print(preparationList[p])
                 del preparationList[p]
                 break
         sorted(readyToDeliverList, key=lambda i: i['preparedTime'])
