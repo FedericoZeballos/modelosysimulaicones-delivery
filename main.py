@@ -23,7 +23,7 @@ readyToDeliverList = []
 
 
 # ====================================
-# TODO (Prof): Variables y módulos de repartidores
+# TODO: (Prof) Variables y módulos de repartidores
 # ====================================
 repartidoresList = [{'id': 0, 'available': False, 'returnTime': 0}, {'id': 1, 'available': False, 'returnTime': 0}]
 repartidoresOrdersList = {
@@ -31,8 +31,10 @@ repartidoresOrdersList = {
   1: [],
 }
 
+
+
 # ====================================
-# TODO (Guille y María): Variables y módulos de repartidores
+# TODO: (Guille y María) Variables y módulos de repartidores
 # ====================================
 deliveredOrdersList = []
 
@@ -80,23 +82,26 @@ def Simular(openTime, closeTime):
                 del preparationList[p]
                 break
         sorted(readyToDeliverList, key=lambda i: i['preparedTime'])
+
+
         # ===================================
-        # TODO (Prof): Recorrer la cola de repartidores disponibles y asignarle un pedido de los que estén preparados y listos.
+        # TODO: (Prof) Recorrer la cola de repartidores disponibles y asignarle un pedido de los que estén preparados y listos.
         #  -> y hacer el resto de cosas marcadas en el word en verde
         # ===================================
 
+
         # ===================================
-        # TODO (Guille y María): Recorrer el diccionario de repartidores que tienen al menos un pedido para llevar y generar recorrido
+        # TODO: (Guille y María) Recorrer el diccionario de repartidores que tienen al menos un pedido para llevar y generar recorrido
         # -> funciones sugeridas
         #        getRoute(pedidosRepartidor) # retorna la ruta
         # -> y hacer el resto de cosas marcadas en el word en cyan
-    	#            campos a utilizar para marcar los pedidos: travelStartTime y arrivalTime
+    	#            campos a agregar para marcar los pedidos: travelStartTime y arrivalTime
         # ===================================
 
     # ===================================
     # Acá se retornarán resultados una vez termine el tiempo:
     # ===================================    
-    print(repartidoresList)
+    print(deliveredOrdersList)
     # FIN
 
 # EJECUTAMOS LA SIMULACION
