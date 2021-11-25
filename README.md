@@ -10,4 +10,4 @@ Tener instalado python y ejecutar el main
 python main.py
 ```
 
-Usamos python 2.7.
+Usamos python 3.
