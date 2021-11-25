@@ -1,3 +1,3 @@
-python generateOrders.py
+python main.py
 
 pause

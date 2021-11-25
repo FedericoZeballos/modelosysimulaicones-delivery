@@ -6,6 +6,9 @@ import generateOrders
 
 # order = {'idOrder': 22, 'time': 2145, 'x': 43, 'y': -23, 'idDelivery': 4}
 
+# Fijo la semilla del generador random para que las corridas sean reproducibles
+# durante la depuracion
+random.seed(10)
 
 # GLOBAL VARS
 openTime = 0
@@ -40,9 +43,11 @@ deliveredOrdersList = []
 
 
 def Simular(openTime, closeTime):
+    
     # Recorre el tiempo
     for t in range(openTime, closeTime):
-    	# ===================================
+    	
+        # ===================================
     	#  ¿En el t actual, hay algún repartidor que complete su recorrido? (Daniel)
     	# ===================================
         for repartidorIndex in range(len(repartidoresList)):
@@ -50,7 +55,8 @@ def Simular(openTime, closeTime):
             if repartidoresList[repartidorIndex]['returnTime'] == t:
             	print("El repartidor: ", repartidoresList[repartidorIndex]['id'], "volvió")
             	repartidoresList[repartidorIndex]['available'] = True
-    	# ===================================
+    	
+        # ===================================
         # Recorre la lista de ordenes que entraron
         # ===================================
         for o in range(len(orderList)):
@@ -61,15 +67,16 @@ def Simular(openTime, closeTime):
                 print("=======  Tiempo: ",t, "=======")
                 print(orderList[o])
                 ##
-                # Crea un nuevo item en la horden que presenta el tiempo que estará listo el pedido
+                # Crea un nuevo item en la orden que presenta el tiempo que estará listo el pedido
                 orderList[o]['preparedTime'] = orderList[o]['time'] + \
                     preparationTime
                 # Traspaso de lista de ordenes generadas o lista de ordenes para preparar
                 preparationList.append(orderList[o])
                 del orderList[o]
                 break
+        
         # ===================================
-        # Recorre la lista de ordenes que están en preparación para se trasladados a reparto
+        # Recorre la lista de ordenes que están en preparación para ser trasladados a reparto
         # ===================================
         for p in range(len(preparationList)):
             # Si el horario coincide con la hora de preparado de la orden
@@ -81,6 +88,7 @@ def Simular(openTime, closeTime):
                 readyToDeliverList.append(preparationList[p])
                 del preparationList[p]
                 break
+        
         sorted(readyToDeliverList, key=lambda i: i['preparedTime'])
 
 
