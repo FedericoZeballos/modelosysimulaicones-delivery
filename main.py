@@ -15,6 +15,7 @@ openTime = 0
 closeTime = 180
 endOfDeliveryTime = closeTime + 30 # Tiempo de margen para que termine el reparto
 maxOrders = 15
+maxOrdersPerDeliver = 3
 
 # ====================================
 # Variables y módulos de Órdenes (Gonza y Boris)
@@ -53,7 +54,7 @@ def Simular(openTime, closeTime):
         for repartidorIndex in range(len(repartidoresList)):
             # Si el horario de vuelta coincide con el tiempo actual
             if repartidoresList[repartidorIndex]['returnTime'] == t:
-            	print("El repartidor: ", repartidoresList[repartidorIndex]['id'], "volvió")
+            	print("El repartidor: ", repartidoresList[repartidorIndex]['id'], "volvió a la base y se encuentra disponible")
             	repartidoresList[repartidorIndex]['available'] = True
     	
         # ===================================
@@ -64,8 +65,8 @@ def Simular(openTime, closeTime):
             # Si el horario coincide con la hora de la orden
             if orderList[o]['time'] == t:
                 ## TIEMPO
-                print("=======  Tiempo: ",t, "=======")
-                print(orderList[o])
+                #print("=======  Tiempo: ",t, "=======")
+                #print(orderList[o])
                 ##
                 # Crea un nuevo item en la orden que presenta el tiempo que estará listo el pedido
                 orderList[o]['preparedTime'] = orderList[o]['time'] + \
@@ -89,14 +90,38 @@ def Simular(openTime, closeTime):
                 del preparationList[p]
                 break
         
+        # Se ordenan los pedidos listos para repartir según cual termino de prepararse antes
         sorted(readyToDeliverList, key=lambda i: i['preparedTime'])
-
 
         # ===================================
         # TODO: (Prof) Recorrer la cola de repartidores disponibles y asignarle un pedido de los que estén preparados y listos.
         #  -> y hacer el resto de cosas marcadas en el word en verde
         # ===================================
-
+        
+        # ===================================
+    	#  Recorremos la lista de repartidores y buscamos si hay ordenes para los que ese encuentran activos
+        #  estas ordenes se agregan a la lista de ordenes hasta completar la capacidad del repartidor
+    	# ===================================
+        for repartidorIndex in range(len(repartidoresList)):
+            
+            # ¿El repartidor se encuentra activo?
+            if repartidoresList[repartidorIndex]['available'] == True:
+                print("El repartidor: ", repartidoresList[repartidorIndex]['id'], "se encuentra activo:")
+                    
+                # Recorremos la lista de ordenes para entregar y comprobamos si existe alguno asignado al repartidos actual
+                for orderIndex in range(len(readyToDeliverList)):
+                
+                    # Comprobamos que el repartidor actual no se encuentre con la capacidad completa de ordenes
+                    if len(repartidoresOrdersList[repartidoresList[repartidorIndex]['id']]) < maxOrdersPerDeliver:
+                        
+                        if readyToDeliverList[orderIndex]['idDelivery'] == repartidoresList[repartidorIndex]['id']:
+                            print(readyToDeliverList[orderIndex])
+                            
+                            # Traspaso de lista de ordenes en preparacion a lista de ordenes listas para enviar
+                            repartidoresOrdersList[repartidoresList[repartidorIndex]['id']].append(readyToDeliverList[orderIndex])
+                            del readyToDeliverList[orderIndex]
+                            breakpoint()
+            	
 
         # ===================================
         # TODO: (Guille y María) Recorrer el diccionario de repartidores que tienen al menos un pedido para llevar y generar recorrido
