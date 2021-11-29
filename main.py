@@ -2,6 +2,7 @@ import random
 
 # Nuestros módulos
 import generateOrders
+from calculateRoutes import *
 
 
 # order = {'idOrder': 22, 'time': 2145, 'x': 43, 'y': -23, 'idDelivery': 4}
@@ -23,6 +24,7 @@ maxOrdersPerDeliver = 3
 orderList = generateOrders(openTime, closeTime, maxOrders)
 preparationList = []
 readyToDeliverList = []
+pedidosEntregados = []
 # ====================================
 
 
@@ -122,22 +124,51 @@ def Simular(openTime, closeTime):
                             repartidoresOrdersList[repartidoresList[repartidorIndex]['id']].append(readyToDeliverList[orderIndex])
                             del readyToDeliverList[orderIndex]
                 
-                print(repartidoresOrdersList[repartidoresList[repartidorIndex]['id']])
-                breakpoint()
-            	
+                # print(repartidoresOrdersList[repartidoresList[repartidorIndex]['id']])
+                # breakpoint()
+                
+                # ===================================
+                # TODO: (Guille y María) Recorrer el diccionario de repartidores que tienen al menos un pedido para llevar y generar recorrido
+                # -> funciones sugeridas
+                #        getRoute(pedidosRepartidor) # retorna la ruta
+                # -> y hacer el resto de cosas marcadas en el word en cyan
+                #            campos a agregar para marcar los pedidos: travelStartTime y arrivalTime
+                # ===================================
+                
+                # comprobamos si el repartidor actual tiene pedidos en la cola de entrega
+                if len(repartidoresOrdersList[repartidoresList[repartidorIndex]['id']]) > 0:
+                    
+                    # Si la cola tiene al menos un pedido, el repartidor sale a enviarlo.
+                    # Para ello planificamos la ruta para saber en que momento realizará cada entrega
+                    entregasPedidos, tiempoRegreso = getRoute(repartidoresOrdersList[repartidoresList[repartidorIndex]['id']], t, deliveryVelocity)
+                    
+                    # Y guardamos las entidades "pedido" en la lista de salidas
+                    for p in entregasPedidos:
+                        pedidosEntregados.append(p)
+                    
+                    # vaciamos la lista de pedidos del repartidor (como si ya hubiera hecho todos los pedidos, total ya sabemos como lo va  a hacer)
+                    repartidoresOrdersList[repartidoresList[repartidorIndex]['id']] = []
+                    
+                    # Ponemos en False el flag de Disponivilidad del repartidor (y se mantendrá así hasta que se cumpla el tiempo de retorno)
+                    repartidoresList[repartidorIndex]['available'] == False
+        
+    print(pedidosEntregados)
+    
+    
+    
+    # Hacemos un postprocesamiento de los datos de cada entidad "pedido" para calcular el tiempo de demora para en la entrega de los pedidos.
+    print('Demoras')
+    for p in pedidosEntregados:
+        demora = p['deliveredTime'] - p['time']
+        print(demora)
 
-        # ===================================
-        # TODO: (Guille y María) Recorrer el diccionario de repartidores que tienen al menos un pedido para llevar y generar recorrido
-        # -> funciones sugeridas
-        #        getRoute(pedidosRepartidor) # retorna la ruta
-        # -> y hacer el resto de cosas marcadas en el word en cyan
-    	#            campos a agregar para marcar los pedidos: travelStartTime y arrivalTime
-        # ===================================
+        
+        
 
     # ===================================
     # Acá se retornarán resultados una vez termine el tiempo:
     # ===================================    
-    print(deliveredOrdersList)
+    #print(deliveredOrdersList)
     # FIN
 
 # EJECUTAMOS LA SIMULACION

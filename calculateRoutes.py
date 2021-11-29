@@ -63,7 +63,10 @@ def getRoute(readyToDeliverList, actualTime, deliveryVelocity):
         actualTime = ordersToDelivery[i]['deliveredTime']
 
     #Se calcula el tiempo de vuelta al local.
-    returnTime = actualTime + calculateTimeToDelivery([0,0], ordersToDelivery[-1], deliveryVelocity)
+    try:
+        returnTime = actualTime + calculateTimeToDelivery([0,0], ordersToDelivery[-1], deliveryVelocity)
+    except:
+        breakpoint()
     
     return [ordersToDelivery, returnTime]
 
