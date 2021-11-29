@@ -120,7 +120,9 @@ def Simular(openTime, closeTime):
                             # Traspaso de lista de ordenes en preparacion a lista de ordenes listas para enviar
                             repartidoresOrdersList[repartidoresList[repartidorIndex]['id']].append(readyToDeliverList[orderIndex])
                             del readyToDeliverList[orderIndex]
-                            breakpoint()
+                
+                print(repartidoresOrdersList[repartidoresList[repartidorIndex]['id']])
+                breakpoint()
             	
 
         # ===================================
