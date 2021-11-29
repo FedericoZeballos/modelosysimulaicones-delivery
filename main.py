@@ -15,7 +15,7 @@ random.seed(10)
 openTime = 0
 closeTime = 180
 endOfDeliveryTime = closeTime + 30 # Tiempo de margen para que termine el reparto
-maxOrders = 15
+maxOrders = 50
 maxOrdersPerDeliver = 3
 
 # ====================================
@@ -31,10 +31,12 @@ pedidosEntregados = []
 # ====================================
 # TODO: (Prof) Variables y módulos de repartidores
 # ====================================
-repartidoresList = [{'id': 0, 'available': False, 'returnTime': 0}, {'id': 1, 'available': False, 'returnTime': 0}]
+repartidoresList = [{'id': 0, 'available': False, 'returnTime': 0}, {'id': 1, 'available': False, 'returnTime': 0}, {'id': 2, 'available': False, 'returnTime': 0}, {'id': 3, 'available': False, 'returnTime': 0}]
 repartidoresOrdersList = {
   0: [],
   1: [],
+  2: [],
+  3: [],
 }
 
 
@@ -43,7 +45,7 @@ repartidoresOrdersList = {
 # TODO: (Guille y María) Variables y módulos de repartidores
 # ====================================
 deliveredOrdersList = []
-deliveryVelocity = 6
+deliveryVelocity = 3
 
 
 def Simular(openTime, closeTime):
@@ -64,7 +66,7 @@ def Simular(openTime, closeTime):
         # Recorre la lista de ordenes que entraron
         # ===================================
         for o in range(len(orderList)):
-            preparationTime = random.randint(10, 30)
+            preparationTime = random.randint(10, 20)
             # Si el horario coincide con la hora de la orden
             if orderList[o]['time'] == t:
                 ## TIEMPO
@@ -109,7 +111,7 @@ def Simular(openTime, closeTime):
             
             # ¿El repartidor se encuentra activo?
             if repartidoresList[repartidorIndex]['available'] == True:
-                print("El repartidor: ", repartidoresList[repartidorIndex]['id'], "se encuentra activo:")
+                print("El repartidor: ", repartidoresList[repartidorIndex]['id'], "se encuentra libre:")
                     
                 # Recorremos la lista de ordenes para entregar y comprobamos si existe alguno asignado al repartidos actual
                 for orderIndex in range(len(readyToDeliverList)):
@@ -165,10 +167,6 @@ def Simular(openTime, closeTime):
         print(demora)
     plt.hist(delayList)
     plt.show()
-        
-
-        
-        
 
     # ===================================
     # Acá se retornarán resultados una vez termine el tiempo:

@@ -20,11 +20,16 @@ def generateOrders(openTime, closeTime, maxOrders):
         idOrder = o
         x = random.randint(-50, 50)
         y = random.randint(-50, 50)
-        if (x < 0):
-
+        if (x < 0 and y < 0):
             idDelivery = 0
         else:
-            idDelivery = 1
+            if (x < 0 and y > 0):
+                idDelivery = 1
+            else:
+                if (x > 0 and y > 0):
+                    idDelivery = 2
+                else:
+                    idDelivery = 3
         order = {'idOrder': idOrder, 'time': time[o],
                  'x': x, 'y': y, 'idDelivery': idDelivery}
         ordersList.append(order)
