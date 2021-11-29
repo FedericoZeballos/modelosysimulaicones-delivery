@@ -41,6 +41,7 @@ repartidoresOrdersList = {
 # TODO: (Guille y María) Variables y módulos de repartidores
 # ====================================
 deliveredOrdersList = []
+deliveryVelocity = 6
 
 
 def Simular(openTime, closeTime):
