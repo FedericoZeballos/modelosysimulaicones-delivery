@@ -1,5 +1,5 @@
 import random
-
+import matplotlib.pyplot as plt
 # Nuestros módulos
 import generateOrders
 from calculateRoutes import *
@@ -158,9 +158,14 @@ def Simular(openTime, closeTime):
     
     # Hacemos un postprocesamiento de los datos de cada entidad "pedido" para calcular el tiempo de demora para en la entrega de los pedidos.
     print('Demoras')
+    delayList = []
     for p in pedidosEntregados:
         demora = p['deliveredTime'] - p['time']
+        delayList.append(demora)
         print(demora)
+    plt.hist(delayList)
+    plt.show()
+        
 
         
         
