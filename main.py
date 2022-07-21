@@ -9,14 +9,14 @@ from calculateRoutes import *
 
 # Fijo la semilla del generador random para que las corridas sean reproducibles
 # durante la depuracion
-random.seed(1234)
+random.seed(352)
 
 # GLOBAL VARS
 openTime = 0
-closeTime = 180
+closeTime = 250
 endOfDeliveryTime = closeTime + 30  # Tiempo de margen para que termine el reparto
 maxOrders = 100
-maxOrdersPerDeliver = 1
+maxOrdersPerDeliver = 3
 
 # ====================================
 # Variables y módulos de Órdenes (Gonza y Boris)
@@ -82,6 +82,7 @@ def Simular(openTime, closeTime):
                 # Traspaso de lista de ordenes generadas o lista de ordenes para preparar
                 preparationList.append(orderList[o])
                 contadores[0] = contadores[0] + 1
+
         # ===================================
         # Recorre la lista de ordenes que están en preparación para ser trasladados a reparto
         # ===================================
@@ -164,9 +165,10 @@ def Simular(openTime, closeTime):
 
     # Hacemos un postprocesamiento de los datos de cada entidad "pedido" para calcular el tiempo de demora para en la entrega de los pedidos.
     # print('Demoras')
-    delayList1 = [0]
-    delayList2 = [0]
+    delayList1 = []
+    delayList2 = []
     zonasTotal = [0, 0]  # 2 zonas
+
     for p in pedidosEntregados:
 
         # print(p['x'], p['y'])
@@ -183,6 +185,7 @@ def Simular(openTime, closeTime):
     print(zonasTotal)
     print("Total de pedidos por repartidor:")
     print(comtadoresrepartidores)
+
     plt.hist(delayList1, label='Zona 1')
     plt.hist(delayList2, label='Zona 2')
     plt.ylim([0, 25])
